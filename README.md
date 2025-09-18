@@ -33,18 +33,10 @@ Given an image $I \in \mathbb{R}^{3 \times H \times W}$, YOLO first resizes it t
 *Loss Function:*
 During training, each ground-truth box is assigned to the grid cell containing its center and to the box predictor with the maximal IoU. The total loss is a sum of localization error (coordinates and dimensions), confidence error, and classification error.
 $$
-L = \lambda_{coord}\sum_{i,j}\sum_{b}1_{ij\text{obj},b}[(x_{ijb}-\hat{x}{ijb})^{2}+(y{ijb}-\hat{y}_{ijb})^{2}]
-$$
-$$
-+\lambda_{coord}\sum_{i,j}\sum_{b}1_{ij\text{obj},b}[(\sqrt{w_{ijb}}-\sqrt{\hat{w}{ijb}})^{2}+(\sqrt{h{ijb}}-\sqrt{\hat{h}_{ijb}})^{2}]
-$$
-$$
-+\sum_{i,j}\sum_{b}1_{ij\text{obj},b}(C_{ijb}-\hat{C}{ijb})^{2} + \lambda{noobj}\sum_{i,j}\sum_{b}1_{ij\text{noobj},b}(C_{ijb}-\hat{C}_{ijb})^{2}
-$$
-$$
-+ \sum_{i,j}1_{ij\text{obj}}\sum_{c}(p_{ijc}-\hat{p}_{ijc})^{2}
-$$
-Here, $\lambda_{coord}$ up-weights localization errors, while $\lambda_{noobj}$ down-weights confidence errors on background boxes.
+L = \lambda_{coord}\sum_{i,j}\sum_{b}1_{ij}^{obj}[(x_{ijb}-\hat{x}_{ijb})^{2}+(y_{ijb}-\hat{y}_{ijb})^{2}] \\
++ \lambda_{coord}\sum_{i,j}\sum_{b}1_{ij}^{obj}[(\sqrt{w_{ijb}}-\sqrt{\hat{w}_{ijb}})^{2}+(\sqrt{h_{ijb}}-\sqrt{\hat{h}_{ijb}})^{2}] \\
++ \sum_{i,j}\sum_{b}1_{ij}^{obj}(C_{ijb}-\hat{C}_{ijb})^{2} + \lambda_{noobj}\sum_{i,j}\sum_{b}1_{ij}^{noobj}(C_{ijb}-\hat{C}_{ijb})^{2} \\
++ \sum_{i,j}1_{ij}^{obj}\sum_{c}(p_{ijc}-\hat{p}_{ijc})^{2}
 
 ---
 
@@ -89,4 +81,5 @@ Our comparative evaluation demonstrates a clear progression across YOLO variants
 The YOLO series illustrates marked real-time detection improvements, with YOLOv10s offering a compelling speed-accuracy balance. Per-class analysis revealed that small, textured objects remain challenging, while large rigid objects like "Truck" and "Arret" attain high F1 scores across all models.
 
 For real-time edge deployment, *YOLOv10s is recommended* based on our findings. Future research could explore self-supervised pre-training on domain-specific traffic datasets to further bridge performance gaps.
+
 
